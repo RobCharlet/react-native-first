@@ -3,9 +3,15 @@ import { View, Text, StyleSheet } from 'react-native';
 
 const ColorBox = ({ colorName, hexCode }) => {
   const boxColor = { backgroundColor: hexCode };
+  const textColor = {
+    color:
+      parseInt(hexCode.replace('#', ''), 16) > 0xffffff / 1.1
+        ? 'black'
+        : 'white',
+  };
   return (
     <View style={[Styles.box, boxColor]}>
-      <Text style={Styles.boxText}>
+      <Text style={textColor}>
         {colorName}: {hexCode}
       </Text>
     </View>
@@ -18,9 +24,6 @@ const Styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 5,
     marginBottom: 10,
-  },
-  boxText: {
-    color: 'white',
   },
 });
 
