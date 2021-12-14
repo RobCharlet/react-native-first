@@ -1,3 +1,6 @@
+//todo : color vignette, disable submit,
+//copy color to clipboard (https://github.com/react-native-clipboard/clipboard
+// persist data
 import React, { useState, useCallback } from 'react';
 import {
   View,
