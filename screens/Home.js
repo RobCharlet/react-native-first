@@ -2,7 +2,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import PalettePreview from '../components/PalettePreview';
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation, route }) => {
+  const newColorPalette = route.params
+    ? route.params.newColorPalette
+    : undefined;
+
   const [colorPalettes, setColorPalettes] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -20,6 +24,13 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     handleFetchPalettes();
   }, []);
+
+  useEffect(() => {
+    if (newColorPalette) {
+      console.log(newColorPalette);
+      setColorPalettes((palettes) => [newColorPalette, ...palettes]);
+    }
+  }, [newColorPalette]);
 
   const handleRefresh = useCallback(async () => {
     setIsRefreshing(true);
@@ -55,7 +66,7 @@ const Home = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => navigation.navigate('ColorPaletteModal')}
         >
-          <Text>Launch Modal</Text>
+          <Text style={styles.modal}>Add a color scheme</Text>
         </TouchableOpacity>
       }
     />
@@ -66,6 +77,12 @@ const styles = StyleSheet.create({
   list: {
     padding: 10,
     backgroundColor: 'white',
+  },
+  modal: {
+    color: 'teal',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginVertical: 20,
   },
 });
 
